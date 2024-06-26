@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CountryList from "./components/CountryList";
 import { useGetCountries } from "./queries/countries";
+import type { CountryTypes } from "./types/countries";
 
 const App = () => {
   const [selectedArea, setSelectedArea] = useState<string[]>([]);
@@ -15,11 +16,13 @@ const App = () => {
   };
 
   const favoriteCountries = selectedArea
-    .map((area) => countries?.find((country: any) => country.area === area))
+    .map((area) =>
+      countries.find((country: CountryTypes) => country.area === area)
+    )
     .filter(Boolean);
 
-  const otherCountries = countries?.filter(
-    (country: any) => !selectedArea.includes(country.area)
+  const otherCountries = countries.filter(
+    (country: CountryTypes) => !selectedArea.includes(country.area)
   );
 
   if (isPending) return null;

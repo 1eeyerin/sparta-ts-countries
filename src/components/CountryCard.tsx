@@ -1,12 +1,12 @@
-const CountryCard = ({
-  country,
-  onClick,
-  isHighlight,
-}: {
-  country: any;
+import type { CountryTypes } from "../types/countries";
+
+type CountryCardProps = {
+  country: CountryTypes;
   onClick: (area: string) => void;
   isHighlight: boolean;
-}) => {
+};
+
+const CountryCard = ({ country, onClick, isHighlight }: CountryCardProps) => {
   return (
     <button
       type="button"
