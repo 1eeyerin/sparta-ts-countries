@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import CountryList from "./components/CountryList";
+import { useGetCountries } from "./queries/countries";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [selectedArea, setSelectedArea] = useState<string[]>([]);
+  const { data: countries, isPending } = useGetCountries();
+
+  const onClick = (area: string) => {
+    setSelectedArea((prev) => {
+      return prev.includes(area)
+        ? prev.filter((item) => item !== area)
+        : [...prev, area];
+    });
+  };
+
+  const favoriteCountries = selectedArea
+    .map((area) => countries?.find((country: any) => country.area === area))
+    .filter(Boolean);
+
+  const otherCountries = countries?.filter(
+    (country: any) => !selectedArea.includes(country.area)
+  );
+
+  if (isPending) return null;
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="text-center my-6">
+        <strong className="text-2xl font-semibold mb-4">
+          Favorite Countries
+        </strong>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <CountryList
+        countries={favoriteCountries}
+        onClick={onClick}
+        isHighlight
+      />
+      <div className="text-center my-6">
+        <strong className="text-2xl font-semibold mb-4">Countries</strong>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <CountryList countries={otherCountries} onClick={onClick} />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
