@@ -5,7 +5,7 @@ import type { CountryTypes } from "./types/countries";
 
 const App = () => {
   const [selectedArea, setSelectedArea] = useState<string[]>([]);
-  const { data: countries, isPending } = useGetCountries();
+  const { data: countries = [], isPending } = useGetCountries();
 
   const onClick = (area: string) => {
     setSelectedArea((prev) => {
