@@ -6,8 +6,11 @@ export type Country = {
 } & Pick<CountryApiResponse, "area" | "capital" | "ccn3">;
 
 export type CountrySelectAreaTypes = Country["area"];
+
 type Translation = { official: string; common: string };
+
 type ArrayTypes = { [index: number]: string };
+
 type LanguageArrayTypes = { [language: string]: string };
 
 export interface CountryApiResponse {
