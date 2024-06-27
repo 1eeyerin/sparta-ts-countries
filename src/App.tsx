@@ -18,7 +18,7 @@ const App = () => {
   };
 
   const favoriteCountries = selectedArea
-    .map((area) => countries.find((country: Country) => country.area === area))
+    .map((area) => countries.find((country: Country) => country.area === area)!)
     .filter(Boolean);
 
   const otherCountries = countries.filter(
