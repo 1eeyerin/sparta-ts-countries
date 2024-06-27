@@ -1,13 +1,15 @@
 import { useState } from "react";
 import CountryList from "./components/CountryList";
 import { useGetCountries } from "./queries/countries";
-import type { CountryTypes } from "./types/countries";
+import type { Country, CountrySelectAreaTypes } from "./types/countries";
 
 const App = () => {
-  const [selectedArea, setSelectedArea] = useState<string[]>([]);
+  const [selectedArea, setSelectedArea] = useState<CountrySelectAreaTypes[]>(
+    []
+  );
   const { data: countries = [], isPending } = useGetCountries();
 
-  const onClick = (area: string) => {
+  const onClick = (area: CountrySelectAreaTypes) => {
     setSelectedArea((prev) => {
       return prev.includes(area)
         ? prev.filter((item) => item !== area)
@@ -16,13 +18,11 @@ const App = () => {
   };
 
   const favoriteCountries = selectedArea
-    .map((area) =>
-      countries.find((country: CountryTypes) => country.area === area)
-    )
+    .map((area) => countries.find((country: Country) => country.area === area))
     .filter(Boolean);
 
   const otherCountries = countries.filter(
-    (country: CountryTypes) => !selectedArea.includes(country.area)
+    (country: Country) => !selectedArea.includes(country.area)
   );
 
   if (isPending) return null;

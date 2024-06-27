@@ -1,8 +1,8 @@
-import type { CountryTypes } from "../types/countries";
+import type { Country, CountrySelectAreaTypes } from "../types/countries";
 
 type CountryCardProps = {
-  country: CountryTypes;
-  onClick: (area: string) => void;
+  country: Country;
+  onClick: (area: CountrySelectAreaTypes) => void;
   isHighlight: boolean;
 };
 
